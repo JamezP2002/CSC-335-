@@ -8,14 +8,14 @@ include 'header.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="index.css"> <!-- Link to the index-specific CSS -->
-    <title>CDKeys Homepage</title>
+    <link rel="stylesheet" href="user.css"> <!-- Link to the index-specific CSS -->
+    <title>CDKeys User Page</title>
 </head>
 <body>
     <div class="main-container">
         <main>
-            <h1>Welcome to CDKeys For Me</h1>
-            <p>Your one-stop shop for the best CD Key deals online. Start exploring now!</p>
+            <h1>User page</h1>
+            <p>WIP</p>
         </main>
     </div>
 </body>
