@@ -3,7 +3,7 @@ body {
     background-color: #2f2243;
     color: #fff;
     margin: 0;
-    padding: 0;
+    padding-top: 60px;
 }
 
 .products-container {
@@ -12,6 +12,7 @@ body {
     justify-content: center;
     padding: 20px;
     gap: 20px;
+    padding-top: 120px;
 }
 
 .product-card {

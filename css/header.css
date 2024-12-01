@@ -9,8 +9,14 @@ body {
     justify-content: space-between;
     align-items: center;
     background-color: #2f2243;
-    padding: 10px 20px;
+    padding: 10px 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    position: fixed; /* Fixes the header to the top of the screen */
+    top: 0; /* Ensures the header is at the very top */
+    left: 0; /* Ensures it spans the full width */
+    width: 100%; /* Makes the header stretch across the screen */
+    z-index: 1000; /* Ensures the header stays above other elements */
+    padding-left: 30px;
 }
 
 .logo {
@@ -40,7 +46,7 @@ body {
 }
 
 .search-bar input {
-    padding: 8px;
+    padding: 12px;
     border: none;
     border-radius: 20px;
     outline: none;
@@ -58,18 +64,8 @@ body {
     height: 20px;
 }
 
-.nav-links {
-    display: flex;
-    gap: 20px;
-}
-
-.nav-links a {
-    color: #fff;
-    text-decoration: none;
-    font-size: 14px;
-}
-
 .user-actions img {
-    width: 24px;
-    height: 24px;
+    width: 40px;
+    height: 40px;
+    padding-right: 70px;
 }
