@@ -57,15 +57,14 @@ project-folder/
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/your-username/cdkeys-for-me.git
+   git clone https://github.com/your-username/CSC-335-CDKey_DB.git
    ```
 2. Set up a local server environment (e.g., XAMPP, WAMP, or MAMP).
 3. Place the project folder in the server's root directory (e.g., `htdocs` for XAMPP).
 4. Open the project in a web browser:
    ```
-   http://localhost/cdkeys-for-me
+   http://localhost/CSC-335-CDKey_DB
    ```
-
 ---
 
 ## Usage
@@ -80,8 +79,8 @@ project-folder/
 ## Technologies Used
 
 - **Frontend**:
-  - HTML5
-  - CSS3
+  - HTML
+  - CSS
   - CSS-Only Carousel
 - **Backend**:
   - PHP for reusable components and server-side logic.
