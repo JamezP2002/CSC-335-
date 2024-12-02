@@ -1,28 +1,29 @@
 <?php
-session_start(); // Start the session
+session_start();
+include 'sql/db_config.php'; // Include the database connection
 
 // Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    // Dummy credentials for login
-    $valid_username = "user";
-    $valid_password = "password";
+    // Sanitize inputs
+    $username = $conn->real_escape_string($username);
+    $password = $conn->real_escape_string($password);
 
-    // Check if the credentials are correct
-    if ($username === $valid_username && $password === $valid_password) {
-        // Set the session variable to indicate the user is logged in
+    // Query to check user credentials
+    $sql = "SELECT * FROM users WHERE username = '$username' AND password = '$password'";
+    $result = $conn->query($sql);
+
+    if ($result && $result->num_rows > 0) {
+        // User exists, set session
         $_SESSION['loggedin'] = true;
-
-        // Redirect to the user page
         header("Location: user.php");
         exit();
     } else {
         $error_message = "Invalid username or password!";
     }
 }
-
 // Include the header
 include 'header.php';
 ?>
@@ -32,7 +33,7 @@ include 'header.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/login.css"> <!-- Link to the login-specific CSS -->
+    <link rel="stylesheet" href="css/login.css">
     <title>Login</title>
 </head>
 <body>
@@ -49,6 +50,7 @@ include 'header.php';
                 <br>
                 <button type="submit">Login</button>
             </form>
+            <p>Don't have an account? <a href="register.php">Register here</a></p>
         </main>
     </div>
 </body>

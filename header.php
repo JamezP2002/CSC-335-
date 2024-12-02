@@ -18,13 +18,13 @@
             <form action="catalog.php" method="GET">
                 <input type="text" name="query" placeholder="Search for products">
                 <button type="submit">
-                    <img src="images/search.png" alt="Search">
+                    <img src="images/search1.png" alt="Search">
                 </button>
             </form>
         </div>
         <div class="user-actions">
-            <a href="user.php"><img src="images/free-user-icon-3296-thumb.png" alt="User"></a>
-            <a href="cart.php"><img src="images/png-clipart-shopping-cart-icon-shopping-cart-black-design.png" alt="Cart"></a>
+            <a href="user.php"><img src="images/circle-user-round.png" alt="User"></a>
+            <a href="cart.php"><img src="images/shopping-basket.png" alt="Cart"></a>
         </div>
     </header>
 </body>
