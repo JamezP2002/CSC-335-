@@ -1,0 +1,73 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #2f2243;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Ensure the body takes the full height of the viewport */
+    flex-direction: column; /* Allows vertical stacking of header and content */
+}
+
+.main-container {
+    margin-top: 70px; /* Adds space between header and content */
+    text-align: center;
+    background-color: #3b2a5a;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    max-width: 400px; /* Restricts the width of the login/user form */
+}
+
+main h1 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #fff;
+}
+
+main form {
+    display: flex;
+    flex-direction: column; /* Aligns inputs and button vertically */
+    align-items: center; /* Centers the form elements horizontally */
+    gap: 10px; /* Adds space between form elements */
+}
+
+form label {
+    font-size: 16px;
+    color: #ddd;
+}
+
+form input {
+    padding: 8px;
+    border: none;
+    border-radius: 5px;
+    width: 100%;
+    font-size: 14px;
+    background-color: #fff;
+    color: #333;
+    outline: none;
+}
+
+form button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #1abc9c;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+form button:hover {
+    background-color: #16a085;
+}
+
+main p {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #e74c3c;
+}

@@ -32,11 +32,12 @@ main p {
 .carousel {
     position: relative;
     width: 80%;
-    max-width: 600px;
+    max-width: 500px;
     margin: 20px auto;
     overflow: hidden;
     border-radius: 10px;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+    aspect-ratio: 16/16;
 }
 
 .carousel-content {
@@ -52,6 +53,7 @@ main p {
 .carousel-item img {
     width: 100%; /* Ensure images scale properly */
     height: auto;
+    object-fit: cover;
 }
 
 /* Radio buttons are hidden */
