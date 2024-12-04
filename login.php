@@ -16,9 +16,20 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $result = $conn->query($sql);
 
     if ($result && $result->num_rows > 0) {
-        // User exists, set session
+        // Fetch user data
+        $user = $result->fetch_assoc();
+
+        // Set session variables
         $_SESSION['loggedin'] = true;
-        header("Location: user.php");
+        $_SESSION['username'] = $user['username'];
+        $_SESSION['role'] = $user['role']; // Role can be 'buyer' or 'seller'
+
+        // Redirect based on user role
+        if ($user['role'] === 'buyer') {
+            header("Location: user.php"); // Redirect to buyer's user page
+        } elseif ($user['role'] === 'seller') {
+            header("Location: seller.php"); // Redirect to seller's page
+        }
         exit();
     } else {
         $error_message = "Invalid username or password!";
