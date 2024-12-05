@@ -4,23 +4,25 @@ include 'sql/db_config.php'; // Include the database connection
 // Handle form submission
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $username = $_POST['username'];
+    $email = $_POST['email'];
     $password = $_POST['password'];
     $role = $_POST['role'];
 
     // Sanitize inputs
     $username = $conn->real_escape_string($username);
-    $password = $conn->real_escape_string($password); // Store password as plain text
+    $email = $conn->real_escape_string($email);
+    $password = $conn->real_escape_string($password); // Store password as plain text (consider hashing for security)
     $role = $conn->real_escape_string($role);
 
-    // Check if the username is already taken
-    $sql = "SELECT * FROM users WHERE username = '$username'";
+    // Check if the username or email is already taken
+    $sql = "SELECT * FROM users WHERE username = '$username' OR email = '$email'";
     $result = $conn->query($sql);
 
     if ($result && $result->num_rows > 0) {
-        $error_message = "Username is already taken!";
+        $error_message = "Username or email is already taken!";
     } else {
         // Insert new user into the database
-        $sql = "INSERT INTO users (username, password, role) VALUES ('$username', '$password', '$role')";
+        $sql = "INSERT INTO users (username, email, password, role) VALUES ('$username', '$email', '$password', '$role')";
         if ($conn->query($sql) === TRUE) {
             header("Location: login.php"); // Redirect to login page after successful registration
             exit();
@@ -49,6 +51,9 @@ include 'header.php';
             <form action="register.php" method="POST">
                 <label for="username">Username:</label>
                 <input type="text" id="username" name="username" required>
+                <br>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
                 <br>
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" required>
