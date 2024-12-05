@@ -58,8 +58,8 @@ include 'header.php';
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" required>
                 <br>
-                <label for="role">Role:</label>
-                <select id="role" name="role" required>
+                <label for="user_type">Role:</label>
+                <select id="user_type" name="user_type" required>
                     <option value="buyer">Buyer</option>
                     <option value="seller">Seller</option>
                 </select>
