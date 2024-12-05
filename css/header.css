@@ -1,0 +1,78 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #2f2243;
+    padding: 10px 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    position: fixed; /* Fixes the header to the top of the screen */
+    top: 0; /* Ensures the header is at the very top */
+    left: 0; /* Ensures it spans the full width */
+    width: 100%; /* Makes the header stretch across the screen */
+    z-index: 1000; /* Ensures the header stays above other elements */
+    padding-left: 30px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo h1 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.logo .black-friday {
+    font-size: 14px;
+    color: #fff;
+    background-color: #e74c3c;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.search-bar input {
+    padding: 12px;
+    border: none;
+    border-radius: 20px;
+    outline: none;
+    width: 400px;
+}
+
+.search-bar button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.search-bar img {
+    width: 24px;
+    height: 24px;
+}
+
+.user-actions {
+    display: flex; /* Align the icons in a row */
+    gap: 10px; /* Adds spacing between the icons */
+    justify-content: flex-end; /* Aligns the icons to the right */
+    padding-right: 50px; /* Adds space between the icons and the right edge of the screen */
+}
+
+.user-actions img {
+    width: 40px;
+    height: 40px;
+}
+

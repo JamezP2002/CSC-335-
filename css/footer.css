@@ -1,0 +1,29 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    min-height: 100vh; /* Ensures the body takes at least the full height of the viewport */
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1; /* Pushes the footer to the bottom */
+}
+
+.fixed-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%; /* Spans the entire width of the viewport */
+    background-color: #2f2243; /* Matches the header or page theme */
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.3); /* Optional shadow for a raised effect */
+}
+
+.fixed-footer p {
+    margin: 0;
+    font-size: 14px;
+}
