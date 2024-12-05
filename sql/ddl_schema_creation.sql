@@ -17,6 +17,7 @@ CREATE TABLE Games (
     Game_ID INT PRIMARY KEY,
     Game_Title VARCHAR(255) NOT NULL,
     Game_Platform VARCHAR(255) NOT NULL,
+    Cover_art VARCHAR(255) NOT NULL,
     Genre VARCHAR(255)
 );
 
@@ -34,7 +35,7 @@ CREATE TABLE Users (
     Username VARCHAR(255) NOT NULL UNIQUE,
     Email VARCHAR(255) NOT NULL UNIQUE,
     Password VARCHAR(255) NOT NULL,
-    User_Type VARCHAR(50)
+    User_Type ENUM('buyer', 'seller') NOT NULL
 );
 
 CREATE TABLE CD_Keys (

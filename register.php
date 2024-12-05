@@ -6,13 +6,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $username = $_POST['username'];
     $email = $_POST['email'];
     $password = $_POST['password'];
-    $role = $_POST['role'];
+    $user_type = $_POST['user_type'];
 
     // Sanitize inputs
     $username = $conn->real_escape_string($username);
     $email = $conn->real_escape_string($email);
     $password = $conn->real_escape_string($password); // Store password as plain text (consider hashing for security)
-    $role = $conn->real_escape_string($role);
+    $user_type = $conn->real_escape_string($user_type);
 
     // Check if the username or email is already taken
     $sql = "SELECT * FROM users WHERE username = '$username' OR email = '$email'";
@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $error_message = "Username or email is already taken!";
     } else {
         // Insert new user into the database
-        $sql = "INSERT INTO users (username, email, password, role) VALUES ('$username', '$email', '$password', '$role')";
+        $sql = "INSERT INTO users (username, email, password, user_type) VALUES ('$username', '$email', '$password', '$user_type')";
         if ($conn->query($sql) === TRUE) {
             header("Location: login.php"); // Redirect to login page after successful registration
             exit();
