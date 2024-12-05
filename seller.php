@@ -48,11 +48,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         // Insert the game into the database
         $game_name = $conn->real_escape_string($game_name);
         $price = $conn->real_escape_string($price);
-        $quantity = $conn->real_escape_string($quantity);
         $cd_key = $conn->real_escape_string($cd_key);
         $cover_art_path = $conn->real_escape_string($target_file);
 
-        $sql = "INSERT INTO games (name, cover_art, price, quantity, cd_key) VALUES ('$game_name', '$cover_art_path', '$price', '$quantity', '$cd_key')";
+        $sql = "INSERT INTO games (name, cover_art, price, quantity, cd_key) VALUES ('$game_name', '$cover_art_path', '$price', '$cd_key')";
         if ($conn->query($sql) === TRUE) {
             $success_message = "Game added successfully!";
         } else {
@@ -91,9 +90,6 @@ include 'header.php';
                 <br>
                 <label for="price">Price:</label>
                 <input type="number" id="price" name="price" step="0.01" required>
-                <br>
-                <label for="quantity">Quantity:</label>
-                <input type="number" id="quantity" name="quantity" required>
                 <br>
                 <label for="cd_key">CD Key:</label>
                 <textarea id="cd_key" name="cd_key" rows="3" required></textarea>
