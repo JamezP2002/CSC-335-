@@ -6,10 +6,9 @@
     <link rel="stylesheet" href="css/footer.css">
     <title>CD Key Store Footer</title>
 </head>
-
-</main>
-<footer class="fixed-footer">
-    <p>&copy; 2024 CSC 335 Project. Created by James P. and Connor B.</p>
-</footer>
+<body>
+    <footer class="fixed-footer">
+        <p>&copy; 2024 CSC 335 Project. Created by James P. and Connor B.</p>
+    </footer>
 </body>
 </html>

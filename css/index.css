@@ -13,7 +13,7 @@ body {
 .main-container {
     width: 100%;
     max-width: 1200px;
-    padding-top: 60px; /* Ensures content does not overlap with the fixed header */
+    padding-top: 100px;
     text-align: center;
 }
 
@@ -29,75 +29,30 @@ main p {
     color: #ddd;
 }
 
-.carousel {
-    position: relative;
-    width: 80%;
-    max-width: 500px;
-    margin: 20px auto;
-    overflow: hidden;
-    border-radius: 10px;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
-    aspect-ratio: 16/16;
-}
-
-.carousel-content {
-    display: flex; /* Lay images side by side */
-    width: 400%; /* 100% * number of images */
-    transition: transform 0.8s ease-in-out;
-}
-
-.carousel-item {
-    flex: 0 100 100%; /* Each image takes up 100% of the container width */
-}
-
-.carousel-item img {
-    width: 100%; /* Ensure images scale properly */
-    height: auto;
-    object-fit: cover;
-}
-
-/* Radio buttons are hidden */
-input[type="radio"] {
-    display: none;
-}
-
-/* Navigation dots */
-.carousel-navigation {
-    position: absolute;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
+/* Showcase Section */
+.showcase {
     display: flex;
-    gap: 10px;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap; /* Allows wrapping for smaller screens */
 }
 
-.carousel-navigation label {
-    display: block;
-    width: 10px;
-    height: 10px;
-    background-color: #fff;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: background-color 0.3s;
+.game-card {
+    text-align: center;
+    background-color: #3c2f57;
+    padding: 10px;
+    border-radius: 8px;
+    width: 200px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
 }
 
-.carousel-navigation label:hover {
-    background-color: #1abc9c;
+.game-card img {
+    width: 100%;
+    border-radius: 4px;
 }
 
-/* Handle each slide when its radio button is selected */
-#image1:checked ~ .carousel-content {
-    transform: translateX(0%);
-}
-
-#image2:checked ~ .carousel-content {
-    transform: translateX(-25%);
-}
-
-#image3:checked ~ .carousel-content {
-    transform: translateX(-50%);
-}
-
-#image4:checked ~ .carousel-content {
-    transform: translateX(-75%);
+.game-card h3 {
+    margin-top: 10px;
+    font-size: 16px;
+    color: #fff;
 }

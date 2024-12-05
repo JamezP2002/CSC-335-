@@ -39,30 +39,43 @@ body {
     border-radius: 4px;
 }
 
-.search-bar {
+/* Apply flex to the form inside .search-bar */
+.search-bar form {
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 5px; /* Space between input and button */
 }
 
+/* Adjust the input field */
 .search-bar input {
-    padding: 12px;
+    padding: 10px 12px;
     border: none;
     border-radius: 20px;
     outline: none;
     width: 400px;
+    box-sizing: border-box;
+    font-size: 16px;
 }
 
+/* Adjust the button */
 .search-bar button {
     background-color: transparent;
     border: none;
     cursor: pointer;
+    padding: 0; /* Remove default padding */
+    margin: 0;  /* Remove default margin */
+    display: flex; /* Make the button a flex container */
+    align-items: center; /* Center the image vertically */
+    justify-content: center; /* Center the image horizontally */
 }
 
-.search-bar img {
-    width: 24px;
-    height: 24px;
+/* Adjust the search icon image */
+.search-bar button img {
+    width: 40px;
+    height: 40px;
+    display: block; /* Remove extra space below the image */
 }
+
 
 .user-actions {
     display: flex; /* Align the icons in a row */

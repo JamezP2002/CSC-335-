@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/header.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>CD Key Store</title>
+    <link rel="stylesheet" href="css/header.css">
 </head>
 <body>
     <header class="main-header">
@@ -12,7 +12,7 @@
             <a href="index.php">
                 <h1>CDKeys For Me</h1>
             </a>
-            <span class="black-friday">Black <span>Friday</span></span>
+            <span class="black-friday">Black Friday</span>
         </div>
         <div class="search-bar">
             <form action="catalog.php" method="GET">
@@ -29,4 +29,3 @@
     </header>
 </body>
 </html>
-

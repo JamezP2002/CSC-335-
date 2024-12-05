@@ -17,36 +17,23 @@ include 'header.php';
             <h1>Welcome to CDKeys For Me</h1>
             <p>Your one-stop shop for the best CD Key deals online. Start exploring now!</p>
 
-            <!-- Image Carousel -->
-            <div class="carousel">
-                <div class="carousel-images">
-                    <input type="radio" id="image1" name="carousel" checked>
-                    <input type="radio" id="image2" name="carousel">
-                    <input type="radio" id="image3" name="carousel">
-                    <input type="radio" id="image4" name="carousel">
-
-                    <div class="carousel-content">
-                        <div class="carousel-item">
-                            <img src="images\heart_of_chornobyl.jpg" alt="S.T.A.L.K.E.R. 2">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="images/minecraft.jpg" alt="Minecraft">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="images\sgvsvsfv.jpg" alt="Spider-Man Remastered">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="images\new_project_18_.jpg" alt="Days Gone">
-                        </div>
-                    </div>
-
-                    <!-- Navigation -->
-                    <div class="carousel-navigation">
-                        <label for="image1"></label>
-                        <label for="image2"></label>
-                        <label for="image3"></label>
-                        <label for="image4"></label>
-                    </div>
+            <!-- Showcase Section -->
+            <div class="showcase">
+                <div class="game-card">
+                    <img src="images/heart_of_chornobyl.jpg" alt="S.T.A.L.K.E.R. 2">
+                    <h3>S.T.A.L.K.E.R. 2</h3>
+                </div>
+                <div class="game-card">
+                    <img src="images/minecraft.jpg" alt="Minecraft">
+                    <h3>Minecraft</h3>
+                </div>
+                <div class="game-card">
+                    <img src="images/spider-man.jpg" alt="Spider-Man Remastered">
+                    <h3>Spider-Man Remastered</h3>
+                </div>
+                <div class="game-card">
+                    <img src="images/days_gone.jpg" alt="Days Gone">
+                    <h3>Days Gone</h3>
                 </div>
             </div>
         </main>
