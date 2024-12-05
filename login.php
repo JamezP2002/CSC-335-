@@ -22,12 +22,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         // Set session variables
         $_SESSION['loggedin'] = true;
         $_SESSION['username'] = $user['username'];
-        $_SESSION['role'] = $user['role']; // Role can be 'buyer' or 'seller'
+        $_SESSION['user_type'] = $user['user_type']; // Role can be 'buyer' or 'seller'
+        $_SESSION['user_id'] = $user['user_id']; // Store the user_id
 
         // Redirect based on user role
-        if ($user['role'] === 'buyer') {
+        if ($user['user_type'] === 'buyer') {
             header("Location: user.php"); // Redirect to buyer's user page
-        } elseif ($user['role'] === 'seller') {
+        } elseif ($user['user_type'] === 'seller') {
             header("Location: seller.php"); // Redirect to seller's page
         }
         exit();
