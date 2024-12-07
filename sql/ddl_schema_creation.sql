@@ -1,18 +1,18 @@
--- create the database if it doesn't exist
-create database if not exists cdkey_db;
+-- Disable foreign key checks to allow dropping tables with dependencies
+SET FOREIGN_KEY_CHECKS = 0;
 
--- use the database
-use cdkey_db;
-
--- drop tables if they exist (to avoid duplication errors)
+-- Drop tables if they exist
 drop table if exists transactions;
-drop table if exists inventory_management;
 drop table if exists cd_keys;
 drop table if exists promotions;
 drop table if exists games;
 drop table if exists users;
+drop table if exists cart;
 
--- create the tables
+-- Re-enable foreign key checks
+SET FOREIGN_KEY_CHECKS = 1;
+
+-- Create the tables
 create table games (
     game_id int auto_increment primary key,
     game_title varchar(255) not null,
@@ -38,24 +38,17 @@ create table users (
     user_type enum('buyer', 'seller') not null
 );
 
-create table cd_keys (
-    key_id int auto_increment primary key,
-    cd_key varchar(255) not null unique,
-    game_id int not null,
-    seller_id int,
-    price decimal(10, 2) not null,
-    status varchar(50),
-    foreign key (game_id) references games(game_id),
-    foreign key (seller_id) references users(user_id)
-);
-
-create table inventory_management (
-    inventory_id int auto_increment primary key,
-    key_id int not null,
-    user_id int not null,
-    stock_amount int,
-    foreign key (key_id) references cd_keys(key_id),
-    foreign key (user_id) references users(user_id)
+CREATE TABLE cd_keys (
+    key_id INT AUTO_INCREMENT PRIMARY KEY,
+    cd_key VARCHAR(255) NOT NULL UNIQUE, -- Each key is unique
+    game_id INT NOT NULL,
+    seller_id INT,
+    buyer_id INT DEFAULT NULL, -- Tracks the user who purchased the key
+    price DECIMAL(10, 2) NOT NULL,
+    status ENUM('available', 'sold') DEFAULT 'available', -- Tracks availability
+    FOREIGN KEY (game_id) REFERENCES games(game_id),
+    FOREIGN KEY (seller_id) REFERENCES users(user_id),
+    FOREIGN KEY (buyer_id) REFERENCES users(user_id) -- Tracks the buyer
 );
 
 create table transactions (
@@ -72,29 +65,39 @@ create table transactions (
     foreign key (game_id) references games(game_id)
 );
 
--- insert data into games
+create table cart (
+    cart_id int auto_increment primary key,
+    user_id int not null,
+    cdkey_id int not null,
+    quantity int default 1,
+    added_at datetime default current_timestamp,
+    foreign key (user_id) references users(user_id),
+    foreign key (cdkey_id) references cd_keys(key_id)
+);
+
+-- Insert data into games
 insert into games (game_title, game_platform, cover_art, genre) 
 values 
-('cyberpunk 2077', 'pc', 'cyberpunk2077.jpg', 'rpg'),
-('the witcher 3', 'pc', 'witcher3.jpg', 'action rpg'),
-('minecraft', 'xbox', 'minecraft.jpg', 'sandbox'),
-('fortnite', 'ps5', 'fortnite.jpg', 'battle royale');
+('Baltro', 'pc', 'baltro.jpg', 'rpg'),
+('Days Gone', 'pc', 'days_gone.jpg', 'action rpg'),
+('Farming Simulator', 'xbox', 'farming.jpg', 'sandbox'),
+('Grand Theft Auto 5', 'ps5', 'gta5.jpg', 'battle royale');
 
--- insert data into promotions
+-- Insert data into promotions
 insert into promotions (game_id, discount_percent, start_date, end_date) 
 values 
 (1, 20.00, '2024-12-01', '2024-12-15'),
 (2, 15.00, '2024-12-10', '2024-12-25'),
 (4, 10.00, '2024-12-20', '2024-12-31');
 
--- insert data into users
+-- Insert data into users
 insert into users (username, email, password, user_type) 
 values 
 ('john_doe', 'john@example.com', 'password123', 'seller'),
 ('jane_doe', 'jane@example.com', 'securepassword', 'buyer'),
 ('admin_user', 'admin@example.com', 'adminpassword', 'seller');
 
--- insert data into cd_keys
+-- Insert data into cd_keys
 insert into cd_keys (cd_key, game_id, seller_id, price, status) 
 values 
 ('abcd1234', 1, 1, 49.99, 'available'),
@@ -102,14 +105,7 @@ values
 ('ijkl9101', 3, 1, 29.99, 'available'),
 ('mnop1121', 4, 3, 19.99, 'available');
 
--- insert data into inventory_management
-insert into inventory_management (key_id, user_id, stock_amount) 
-values 
-(1, 1, 10),
-(3, 1, 5),
-(4, 3, 20);
-
--- insert data into transactions
+-- Insert data into transactions
 insert into transactions (buyer_id, seller_id, cdkey_id, game_id, price, transaction_date) 
 values 
 (2, 1, 2, 2, 39.99, '2024-12-01 14:30:00'),

@@ -1,14 +1,44 @@
 <?php
-session_start(); // Start the session
+session_start();
+include 'sql/db_config.php'; // Include the database connection
 
 // Check if the user is logged in
-if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
-    // Redirect to the login page if not logged in
+if (!isset($_SESSION['loggedin'])) {
     header("Location: login.php");
     exit();
 }
 
-// Include the header
+$user_id = $_SESSION['user_id'];
+
+// Fetch items in the cart
+$sql = "
+    SELECT 
+        cart.quantity,
+        games.cover_art,
+        games.game_title,
+        games.game_platform,
+        cd_keys.price,
+        cd_keys.key_id AS cdkey_id -- Add key_id for removal
+    FROM 
+        cart
+    INNER JOIN 
+        cd_keys 
+    ON 
+        cart.cdkey_id = cd_keys.key_id
+    INNER JOIN 
+        games 
+    ON 
+        cd_keys.game_id = games.game_id
+    WHERE 
+        cart.user_id = ?
+";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+$result = $stmt->get_result();
+$cart_items = $result->fetch_all(MYSQLI_ASSOC);
+$stmt->close();
+
 include 'header.php';
 ?>
 
@@ -17,20 +47,63 @@ include 'header.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="cart.css"> <!-- Link to the index-specific CSS -->
-    <title>CDKeys shopping cart</title>
+    <link rel="stylesheet" href="css/cart.css">
+    <title>Your Cart</title>
 </head>
 <body>
-    <div class="main-container">
-        <main>
-            <h1>Shopping cart</h1>
-            <p>WIP</p>
-        </main>
+    <div class="cart-container">
+        <h1>Your Cart</h1>
+        <?php if (!empty($cart_items)): ?>
+            <table class="cart-table">
+                <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Title</th>
+                        <th>Platform</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Subtotal</th>
+                        <th>Action</th> <!-- Added Action column -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php 
+                    $total = 0;
+                    foreach ($cart_items as $item): 
+                        $subtotal = $item['price'] * $item['quantity'];
+                        $total += $subtotal;
+                    ?>
+                        <tr>
+                            <td><img src="images/<?= htmlspecialchars($item['cover_art'] ?? 'placeholder.jpg'); ?>" alt="<?= htmlspecialchars($item['game_title'] ?? 'No Title'); ?>"></td>
+                            <td><?= htmlspecialchars($item['game_title'] ?? 'No Title'); ?></td>
+                            <td><?= htmlspecialchars($item['game_platform'] ?? 'Unknown Platform'); ?></td>
+                            <td>$<?= number_format($item['price'] ?? 0, 2); ?></td>
+                            <td><?= htmlspecialchars($item['quantity'] ?? 0); ?></td>
+                            <td>$<?= number_format($subtotal ?? 0, 2); ?></td>
+                            <td>
+                                <!-- Remove Button Form -->
+                                <form method="POST" action="remove_from_cart.php">
+                                    <input type="hidden" name="cdkey_id" value="<?= htmlspecialchars($item['cdkey_id']); ?>">
+                                    <button type="submit" class="remove-btn">Remove</button>
+                                </form>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+            <div class="cart-summary">
+                <p class="total"><strong>Total: $<?= number_format($total, 2); ?></strong></p>
+                <form action="checkout.php" method="POST">
+                    <button type="submit" class="checkout-btn">Proceed to Checkout</button>
+                </form>
+            </div>
+        <?php else: ?>
+            <p class="empty-cart">Your cart is empty!</p>
+        <?php endif; ?>
     </div>
 </body>
 </html>
 
 <?php
-// Include the footer
 include 'footer.php';
 ?>

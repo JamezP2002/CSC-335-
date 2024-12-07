@@ -9,29 +9,33 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     // Sanitize inputs
     $username = $conn->real_escape_string($username);
-    $password = $conn->real_escape_string($password);
 
-    // Query to check user credentials
-    $sql = "SELECT * FROM users WHERE username = '$username' AND password = '$password'";
+    // Query to fetch user credentials
+    $sql = "SELECT * FROM users WHERE username = '$username'";
     $result = $conn->query($sql);
 
     if ($result && $result->num_rows > 0) {
         // Fetch user data
         $user = $result->fetch_assoc();
 
-        // Set session variables
-        $_SESSION['loggedin'] = true;
-        $_SESSION['username'] = $user['username'];
-        $_SESSION['user_type'] = $user['user_type']; // Role can be 'buyer' or 'seller'
-        $_SESSION['user_id'] = $user['user_id']; // Store the user_id
+        // Verify the password
+        if (password_verify($password, $user['password'])) {
+            // Set session variables
+            $_SESSION['loggedin'] = true;
+            $_SESSION['username'] = $user['username'];
+            $_SESSION['user_type'] = $user['user_type']; // Role can be 'buyer' or 'seller'
+            $_SESSION['user_id'] = $user['user_id']; // Store the user_id
 
-        // Redirect based on user role
-        if ($user['user_type'] === 'buyer') {
-            header("Location: user.php"); // Redirect to buyer's user page
-        } elseif ($user['user_type'] === 'seller') {
-            header("Location: seller.php"); // Redirect to seller's page
+            // Redirect based on user role
+            if ($user['user_type'] === 'buyer') {
+                header("Location: user.php"); // Redirect to buyer's user page
+            } elseif ($user['user_type'] === 'seller') {
+                header("Location: seller.php"); // Redirect to seller's page
+            }
+            exit();
+        } else {
+            $error_message = "Invalid username or password!";
         }
-        exit();
     } else {
         $error_message = "Invalid username or password!";
     }

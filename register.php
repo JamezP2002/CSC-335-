@@ -3,37 +3,52 @@ include 'sql/db_config.php'; // Include the database connection
 
 // Handle form submission
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $username = $_POST['username'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
+    $username = trim($_POST['username']);
+    $email = trim($_POST['email']);
+    $password = trim($_POST['password']);
     $user_type = $_POST['user_type'];
 
-    // Sanitize inputs
-    $username = $conn->real_escape_string($username);
-    $email = $conn->real_escape_string($email);
-    $password = $conn->real_escape_string($password); // Store password as plain text (consider hashing for security)
-    $user_type = $conn->real_escape_string($user_type);
-
-    // Check if the username or email is already taken
-    $sql = "SELECT * FROM users WHERE username = '$username' OR email = '$email'";
-    $result = $conn->query($sql);
-
-    if ($result && $result->num_rows > 0) {
-        $error_message = "Username or email is already taken!";
+    // Check if all fields are filled
+    if (empty($username) || empty($email) || empty($password) || empty($user_type)) {
+        $error_message = "All fields are required.";
     } else {
-        // Insert new user into the database
-        $sql = "INSERT INTO users (username, email, password, user_type) VALUES ('$username', '$email', '$password', '$user_type')";
-        if ($conn->query($sql) === TRUE) {
-            header("Location: login.php"); // Redirect to login page after successful registration
-            exit();
+        // Sanitize inputs
+        $username = $conn->real_escape_string($username);
+        $email = $conn->real_escape_string($email);
+        $user_type = $conn->real_escape_string($user_type);
+
+        // Hash the password securely
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+        // Check if the username or email is already taken
+        $sql = "SELECT * FROM users WHERE username = ? OR email = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ss", $username, $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result && $result->num_rows > 0) {
+            $error_message = "Username or email is already taken!";
         } else {
-            $error_message = "Error: " . $conn->error;
+            // Insert new user into the database
+            $sql = "INSERT INTO users (username, email, password, user_type) VALUES (?, ?, ?, ?)";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("ssss", $username, $email, $hashed_password, $user_type);
+
+            if ($stmt->execute()) {
+                header("Location: login.php"); // Redirect to login page after successful registration
+                exit();
+            } else {
+                $error_message = "Error: " . $stmt->error;
+            }
+            $stmt->close();
         }
     }
 }
 // Include the header
 include 'header.php';
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">

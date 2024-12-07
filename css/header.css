@@ -1,24 +1,33 @@
-body {
+/* General Reset */
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
     font-family: Arial, sans-serif;
 }
 
+/* Main Header */
 .main-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: #2f2243;
-    padding: 10px 10px;
+    padding: 10px 20px; /* Added padding to the right for breathing room */
+    padding-right: 40px; /* Specific padding on the right side for spacing */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-    position: fixed; /* Fixes the header to the top of the screen */
-    top: 0; /* Ensures the header is at the very top */
-    left: 0; /* Ensures it spans the full width */
-    width: 100%; /* Makes the header stretch across the screen */
-    z-index: 1000; /* Ensures the header stays above other elements */
-    padding-left: 30px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    box-sizing: border-box;
 }
 
+/* Logo Section */
 .logo {
     display: flex;
     align-items: center;
@@ -26,66 +35,111 @@ body {
 }
 
 .logo h1 {
-    font-size: 24px;
+    font-size: 1.5rem;
     font-weight: bold;
     color: #fff;
+    margin: 0;
 }
 
 .logo .black-friday {
-    font-size: 14px;
+    font-size: 0.875rem;
     color: #fff;
     background-color: #e74c3c;
     padding: 2px 6px;
     border-radius: 4px;
+    font-weight: bold;
 }
 
-/* Apply flex to the form inside .search-bar */
+/* Search Bar */
+.search-bar {
+    flex: 1; /* Allow the search bar to take up remaining space */
+    display: flex;
+    justify-content: center; /* Center the search bar */
+    align-items: center;
+}
+
 .search-bar form {
     display: flex;
     align-items: center;
-    gap: 5px; /* Space between input and button */
+    gap: 5px;
+    width: 100%;
+    max-width: 600px;
 }
 
-/* Adjust the input field */
 .search-bar input {
-    padding: 10px 12px;
+    padding: 10px 15px;
     border: none;
     border-radius: 20px;
     outline: none;
-    width: 400px;
-    box-sizing: border-box;
-    font-size: 16px;
+    width: 100%;
+    font-size: 1rem;
+    background-color: #fff;
+    color: #333;
 }
 
-/* Adjust the button */
 .search-bar button {
     background-color: transparent;
     border: none;
     cursor: pointer;
-    padding: 0; /* Remove default padding */
-    margin: 0;  /* Remove default margin */
-    display: flex; /* Make the button a flex container */
-    align-items: center; /* Center the image vertically */
-    justify-content: center; /* Center the image horizontally */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
 }
 
-/* Adjust the search icon image */
 .search-bar button img {
-    width: 40px;
-    height: 40px;
-    display: block; /* Remove extra space below the image */
+    width: 24px;
+    height: 24px;
 }
 
-
+/* User Actions */
 .user-actions {
-    display: flex; /* Align the icons in a row */
-    gap: 10px; /* Adds spacing between the icons */
-    justify-content: flex-end; /* Aligns the icons to the right */
-    padding-right: 50px; /* Adds space between the icons and the right edge of the screen */
+    display: flex;
+    gap: 15px; /* Add spacing between icons */
+    align-items: center;
 }
 
 .user-actions img {
-    width: 40px;
-    height: 40px;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
+.user-actions img:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .main-header {
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 10px;
+    }
+
+    .logo {
+        margin-bottom: 10px;
+    }
+
+    .search-bar form {
+        max-width: 100%;
+    }
+
+    .user-actions {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .search-bar input {
+        font-size: 0.9rem;
+        padding: 8px 10px;
+    }
+
+    .user-actions img {
+        width: 28px;
+        height: 28px;
+    }
+}

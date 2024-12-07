@@ -71,3 +71,9 @@ main p {
     font-size: 14px;
     color: #e74c3c;
 }
+
+.error {
+    color: #e74c3c;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
