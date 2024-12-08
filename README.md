@@ -3,6 +3,8 @@
 
 Welcome to **CDKeys For Me**, a responsive web application for purchasing CD keys for popular games at competitive prices. This project is designed to provide a clean, user-friendly interface for customers to browse, search, and purchase game keys easily.
 
+![Screenshot of the app](images/homepage.png)
+
 ---
 
 ## Features
