@@ -2,12 +2,6 @@
 session_start();
 include 'sql/db_config.php'; // Include the database connection
 
-// Check if the user is logged in
-if (!isset($_SESSION['loggedin'])) {
-    header("Location: login.php");
-    exit();
-}
-
 // Fetch the search query from the URL
 $search_query = isset($_GET['query']) ? $_GET['query'] : '';
 
@@ -19,17 +13,30 @@ $sql = "
         g.game_title,
         g.game_platform, 
         g.genre, 
-        ck.price,
+        COALESCE(MIN(ck.price), ' N/A') AS price,
         ck.key_id AS cdkey_id,
-        ck.status
+        CASE 
+            WHEN ck.status = 'available' THEN 'available'
+            ELSE 'sold out'
+        END AS status
     FROM 
         games g
-    INNER JOIN 
-        cd_keys ck 
+    LEFT JOIN 
+        (
+            SELECT 
+                game_id, 
+                key_id, 
+                price, 
+                status 
+            FROM 
+                cd_keys 
+            WHERE 
+                status = 'available' 
+            ORDER BY game_id, key_id DESC
+        ) ck 
     ON 
         g.game_id = ck.game_id
-    WHERE 
-        ck.status = 'available'
+    GROUP BY g.game_id
 ";
 
 if (!empty($search_query)) {
@@ -85,19 +92,22 @@ include 'header.php';
                             <h3><?= htmlspecialchars($item['game_title']); ?></h3>
                             <p><strong>Platform:</strong> <?= htmlspecialchars($item['game_platform']); ?></p>
                             <p><strong>Genre:</strong> <?= htmlspecialchars($item['genre']); ?></p>
-                            <p class="price"><strong>Price:</strong> $<?= htmlspecialchars($item['price']); ?></p>
+                            <p class="price">
+                                <strong>Price:</strong> 
+                                <?= $item['price'] !== 'N/A' ? "$" . htmlspecialchars($item['price']) : 'Not Available'; ?>
+                            </p>
                             <p class="stock">
                                 <strong>Stock:</strong> 
-                                <?= $item['status'] === 'available' ? 'In Stock' : 'Out of Stock'; ?>
+                                <?= $item['status'] === 'available' ? 'In Stock' : 'Sold Out'; ?>
                             </p>
-                            
-                            <!-- Form for adding the item to the cart -->
+
                             <form method="POST" action="add_to_cart.php">
                                 <input type="hidden" name="cdkey_id" value="<?= htmlspecialchars($item['cdkey_id']); ?>">
                                 <button type="submit" class="buy-now-btn" <?= $item['status'] !== 'available' ? 'disabled' : ''; ?>>
                                     <?= $item['status'] === 'available' ? 'Buy Now' : 'Out of Stock'; ?>
                                 </button>
                             </form>
+
                         </div>
                     <?php endforeach; ?>
                 <?php else: ?>
