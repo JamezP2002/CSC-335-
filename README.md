@@ -66,13 +66,14 @@ project-folder/
 ├── index.php               # Homepage of the site
 ├── header.php              # Header component
 ├── footer.php              # Footer component
-├── css/
-│   └── index.css           # Styles specific to the index page
+├── css/                    
+│   └──                     # Css styles specific to each webpage
+│           
 ├── images/
-│   ├── stalker2.jpg        # Game images for carousel
-│   ├── minecraft.jpg
-│   ├── gta5.jpg
-│   └── farming-simulator.jpg
+│   └──                     # game cover art and also icons for header/footer
+│   
+├── github_images/
+│   └──                     # github images for documentation
 └── README.md               # Project documentation
 ```
 
@@ -86,10 +87,13 @@ project-folder/
    ```
 2. Set up a local server environment (e.g., XAMPP, WAMP, or MAMP).
 3. Place the project folder in the server's root directory (e.g., `htdocs` for XAMPP).
-4. Open the project in a web browser:
+4. Run the ```ddl_schema_creation.sql``` found inside the ```sql/``` folder.
+5. Run all the creation of tables/databases and then insert statements. 
+6. Open the project in a web browser:
    ```
    http://localhost/CSC-335-CDKey_DB
    ```
+7. Register an account, and then enjoy playing around! 
 ---
 
 ## Usage
@@ -98,6 +102,7 @@ project-folder/
 - Use the search bar to find specific games.
 - Browse game categories and explore discounted prices.
 - Click on the "Buy Now" button for purchasing options.
+- Activate the key for your platform and enjoy!
 
 ---
 
@@ -106,13 +111,14 @@ project-folder/
 - **Frontend**:
   - HTML
   - CSS
-  - CSS-Only Carousel
 - **Backend**:
   - PHP for reusable components and server-side logic.
+  - SQL for queries and ddl statments.
 - **Tools**:
-  - Visual Studio Code for development
-  - Git for version control
-  - Local server environment (e.g., XAMPP)
+  - Visual Studio Code for development.
+  - Git for version control.
+  - Local server environment (e.g., XAMPP).
+  - MariaDB for SQL.
 
 ---
 
