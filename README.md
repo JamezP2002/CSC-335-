@@ -15,7 +15,8 @@ Welcome to **CDKeys For Me**, a responsive web application for purchasing CD key
   - A list of all the games we currently offer on the site.
   - Fully responsive and visually appealing layout.
   - Shows if a game is available or sold.
-  - Allows users to buy the game right there in the menu.
+  - Allows users to buy the game right there in the menu (If Buyer Role).
+  - Shows current promotions for games.
     
 - **Login**:
 ![Screenshot of the app](github_images/login.png)
@@ -27,7 +28,23 @@ Welcome to **CDKeys For Me**, a responsive web application for purchasing CD key
   - An intuitive register page where the user puts some information in.
   - Allows users to create an account, either as a buyer or a seller.
  
-  
+- **Buyer View**:
+![Screenshot of the app](github_images/buyer view.png)
+  - A list of all the games the user might have bought.
+  - Allows users to buy games from the catalog now.
+  - User can grab the key for the game they bought if they forgot it earlier.
+ 
+### Seller-Facing Features
+- **Seller View**:
+![Screenshot of the app](github_images/seller view.png)
+  - A list of all the games the seller currently has in the marketplace.
+  - Shows if the game has been sold or not.
+
+- **Selling A Game**:
+![Screenshot of the app](github_images/add a game.png)
+  - Allows the seller to sell a game from the provided list.
+  - Seller can provide the price and the key.
+  - Shows up on their user page after adding.
 
 ### Technical Features
 - **HTML, CSS, and PHP**:
