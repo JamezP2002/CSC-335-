@@ -5,7 +5,7 @@ include 'sql/db_config.php'; // Include the database connection
 // Fetch the search query from the URL
 $search_query = isset($_GET['query']) ? $_GET['query'] : '';
 
-// Fetch game and CD key details, filtered by search query if present
+// Fetch game, CD key, and promotion details, filtered by search query if present
 $catalog_items = [];
 $sql = "
     SELECT 
@@ -13,12 +13,20 @@ $sql = "
         g.game_title,
         g.game_platform, 
         g.genre, 
-        COALESCE(MIN(ck.price), ' N/A') AS price,
+        COALESCE(MIN(ck.price), 'N/A') AS price,
         ck.key_id AS cdkey_id,
         CASE 
             WHEN ck.status = 'available' THEN 'available'
             ELSE 'sold out'
-        END AS status
+        END AS status,
+        p.discount_percent,
+        p.start_date,
+        p.end_date,
+        CASE 
+            WHEN p.start_date <= CURDATE() AND p.end_date >= CURDATE() THEN 
+                ROUND(ck.price - (ck.price * (p.discount_percent / 100)), 2)
+            ELSE NULL
+        END AS discounted_price
     FROM 
         games g
     LEFT JOIN 
@@ -36,20 +44,24 @@ $sql = "
         ) ck 
     ON 
         g.game_id = ck.game_id
-    GROUP BY g.game_id
+    LEFT JOIN 
+        promotions p 
+    ON 
+        g.game_id = p.game_id
+    WHERE 1 = 1
 ";
 
 if (!empty($search_query)) {
-    $sql .= " AND (g.game_title LIKE ? OR g.game_platform LIKE ? OR g.genre LIKE ?)";
+    $sql .= " AND g.game_title LIKE ?";
 }
 
-$sql .= " ORDER BY g.game_title ASC";
+$sql .= " GROUP BY g.game_id ORDER BY g.game_title ASC";
 
 $stmt = $conn->prepare($sql);
 
 if (!empty($search_query)) {
     $search_param = '%' . $search_query . '%';
-    $stmt->bind_param("sss", $search_param, $search_param, $search_param);
+    $stmt->bind_param("s", $search_param);
 }
 
 $stmt->execute();
@@ -94,12 +106,22 @@ include 'header.php';
                             <p><strong>Genre:</strong> <?= htmlspecialchars($item['genre']); ?></p>
                             <p class="price">
                                 <strong>Price:</strong> 
-                                <?= $item['price'] !== 'N/A' ? "$" . htmlspecialchars($item['price']) : 'Not Available'; ?>
+                                <?php if (!empty($item['discounted_price'])): ?>
+                                    <span class="original-price">$<?= htmlspecialchars($item['price']); ?></span> 
+                                    <span class="discounted-price">$<?= htmlspecialchars($item['discounted_price']); ?></span>
+                                <?php else: ?>
+                                    <?= $item['price'] !== 'N/A' ? "$" . htmlspecialchars($item['price']) : 'Not Available'; ?>
+                                <?php endif; ?>
                             </p>
                             <p class="stock">
                                 <strong>Stock:</strong> 
                                 <?= $item['status'] === 'available' ? 'In Stock' : 'Sold Out'; ?>
                             </p>
+                            <?php if (!empty($item['discount_percent']) && $item['start_date'] <= date('Y-m-d') && $item['end_date'] >= date('Y-m-d')): ?>
+                                <p class="promotion">
+                                    <strong>Promotion:</strong> <?= htmlspecialchars($item['discount_percent']); ?>% Off!
+                                </p>
+                            <?php endif; ?>
 
                             <form method="POST" action="add_to_cart.php">
                                 <input type="hidden" name="cdkey_id" value="<?= htmlspecialchars($item['cdkey_id']); ?>">
@@ -107,7 +129,6 @@ include 'header.php';
                                     <?= $item['status'] === 'available' ? 'Buy Now' : 'Out of Stock'; ?>
                                 </button>
                             </form>
-
                         </div>
                     <?php endforeach; ?>
                 <?php else: ?>

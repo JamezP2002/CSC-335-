@@ -5,6 +5,8 @@
     --text-color: #333;
     --secondary-text-color: #666;
     --font-family: Arial, sans-serif;
+    --discount-color: #e74c3c;
+    --original-price-color: #666;
 }
 
 body {
@@ -53,6 +55,18 @@ body {
 .cart-table tbody img {
     max-width: 100px;
     border-radius: 4px;
+}
+
+.cart-table .original-price {
+    text-decoration: line-through;
+    color: var(--original-price-color);
+    margin-right: 8px;
+}
+
+.cart-table .discounted-price {
+    color: var(--discount-color);
+    font-weight: bold;
+    font-size: 1.1em;
 }
 
 .cart-summary {

@@ -43,13 +43,27 @@ body {
 
 .product-card .price {
     font-size: 18px;
-    font-weight: bold;
     color: #1abc9c;
+    font-weight: bold;
+    margin-bottom: 10px;
 }
 
-.product-card .discount {
+.product-card .price .original-price {
+    text-decoration: line-through;
+    color: grey;
+    margin-right: 8px;
+}
+
+.product-card .price .discounted-price {
+    color: red;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.product-card .promotion {
     font-size: 14px;
-    color: #e74c3c;
+    color: #1abc9c;
+    font-style: italic;
 }
 
 .product-card button {

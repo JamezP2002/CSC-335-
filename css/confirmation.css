@@ -24,7 +24,7 @@ main h1 {
 .codes-list {
     margin: 20px 0;
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: wrap; 
     gap: 20px;
     justify-content: center;
 }

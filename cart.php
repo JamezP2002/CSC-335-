@@ -10,7 +10,7 @@ if (!isset($_SESSION['loggedin'])) {
 
 $user_id = $_SESSION['user_id'];
 
-// Fetch items in the cart
+// Fetch items in the cart along with promotion details
 $sql = "
     SELECT 
         cart.quantity,
@@ -18,7 +18,15 @@ $sql = "
         games.game_title,
         games.game_platform,
         cd_keys.price,
-        cd_keys.key_id AS cdkey_id -- Add key_id for removal
+        cd_keys.key_id AS cdkey_id,
+        p.discount_percent,
+        p.start_date,
+        p.end_date,
+        CASE 
+            WHEN p.start_date <= CURDATE() AND p.end_date >= CURDATE() THEN 
+                ROUND(cd_keys.price - (cd_keys.price * (p.discount_percent / 100)), 2)
+            ELSE NULL
+        END AS discounted_price
     FROM 
         cart
     INNER JOIN 
@@ -29,6 +37,10 @@ $sql = "
         games 
     ON 
         cd_keys.game_id = games.game_id
+    LEFT JOIN 
+        promotions p
+    ON 
+        games.game_id = p.game_id
     WHERE 
         cart.user_id = ?
 ";
@@ -70,16 +82,24 @@ include 'header.php';
                     <?php 
                     $total = 0;
                     foreach ($cart_items as $item): 
-                        $subtotal = $item['price'] * $item['quantity'];
+                        $price = $item['discounted_price'] ?? $item['price']; // Use discounted price if available
+                        $subtotal = $price * $item['quantity'];
                         $total += $subtotal;
                     ?>
                         <tr>
                             <td><img src="images/<?= htmlspecialchars($item['cover_art'] ?? 'placeholder.jpg'); ?>" alt="<?= htmlspecialchars($item['game_title'] ?? 'No Title'); ?>"></td>
                             <td><?= htmlspecialchars($item['game_title'] ?? 'No Title'); ?></td>
                             <td><?= htmlspecialchars($item['game_platform'] ?? 'Unknown Platform'); ?></td>
-                            <td>$<?= number_format($item['price'] ?? 0, 2); ?></td>
+                            <td>
+                                <?php if (!empty($item['discounted_price'])): ?>
+                                    <span class="original-price">$<?= number_format($item['price'], 2); ?></span>
+                                    <span class="discounted-price">$<?= number_format($item['discounted_price'], 2); ?></span>
+                                <?php else: ?>
+                                    $<?= number_format($item['price'], 2); ?>
+                                <?php endif; ?>
+                            </td>
                             <td><?= htmlspecialchars($item['quantity'] ?? 0); ?></td>
-                            <td>$<?= number_format($subtotal ?? 0, 2); ?></td>
+                            <td>$<?= number_format($subtotal, 2); ?></td>
                             <td>
                                 <!-- Remove Button Form -->
                                 <form method="POST" action="remove_from_cart.php">

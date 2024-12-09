@@ -109,11 +109,13 @@ values
 (4, 10.00, '2024-12-20', '2024-12-31');
 
 -- Insert data into users
-INSERT INTO users (username, email, password, user_type) VALUES ('john_doe', 'john@example.com', '$2y$10$JbtyzK2J/Fa5jHV6gNQ82eJhItzYBhTeZ7DNR1A9wPj2qKU4VV4IS', 'seller');
-INSERT INTO users (username, email, password, user_type) VALUES ('jane_doe', 'jane@example.com', '$2y$10$UvNYImw6ph29pOFpPZ6z4eR5IvSYufGlhtOETe8oNUsx5e6j4sP0a', 'buyer');
-INSERT INTO users (username, email, password, user_type) VALUES ('admin_user', 'admin@example.com', '$2y$10$8FwnRyUeQZ6WpChNOabhnOnEBL4Bbc99ZRyF5VwsL7DQm0G9TjSWq', 'seller');
+insert into users (username, email, password, user_type) 
+values 
+('john_doe', 'john@example.com', 'password123', 'seller'),
+('jane_doe', 'jane@example.com', 'securepassword', 'buyer'),
+('admin_user', 'admin@example.com', 'adminpassword', 'seller');
 
--- Insert data into cd_keys
+-- Insert data that is available
 INSERT INTO cd_keys (cd_key, game_id, seller_id, price, status) 
 VALUES 
 ('abcd1234', 1, 1, 49.99, 'available'),
@@ -132,6 +134,7 @@ VALUES
 ('abcd1345', 14, 2, 45.99, 'available'),
 ('efgh2467', 15, 3, 39.99, 'available');
 
+-- insert data that is sold
 INSERT INTO cd_keys (cd_key, game_id, seller_id, price, status)
 VALUES 
 (NULL, 16, 1, 19.99, 'sold'),
@@ -141,10 +144,20 @@ VALUES
 (NULL, 20, 1, 19.99, 'sold'),
 (NULL, 21, 1, 19.99, 'sold');
 
-
 -- Insert data into transactions
 insert into transactions (buyer_id, seller_id, cdkey_id, game_id, price, transaction_date) 
 values 
 (2, 1, 2, 2, 39.99, '2024-12-01 14:30:00'),
 (2, 3, 4, 4, 19.99, '2024-12-03 10:00:00');
+
+use cdkey_db;
+select * from users;
+
+select * from games;
+
+select * from promotions;
+
+insert into promotions (game_id, discount_percent, start_date, end_date) 
+values 
+(8, 10.00, '2024-01-01', '2024-12-15');
 

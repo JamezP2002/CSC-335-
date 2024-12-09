@@ -18,23 +18,33 @@ if ($user_type === 'seller') {
     exit();
 }
 
-// Fetch items from the cart
+// Fetch items from the cart along with promotion details
 $sql = "
     SELECT 
         cart.quantity,
         ck.cd_key,
-        ck.price,
+        ck.price AS original_price,
         ck.key_id,
         ck.status,
         ck.seller_id,
         g.game_title,
-        g.game_id
+        g.game_id,
+        p.discount_percent,
+        p.start_date,
+        p.end_date,
+        CASE 
+            WHEN p.start_date <= CURDATE() AND p.end_date >= CURDATE() THEN 
+                ROUND(ck.price - (ck.price * (p.discount_percent / 100)), 2)
+            ELSE ck.price
+        END AS final_price
     FROM 
         cart
     INNER JOIN 
         cd_keys ck ON cart.cdkey_id = ck.key_id
     INNER JOIN 
         games g ON ck.game_id = g.game_id
+    LEFT JOIN 
+        promotions p ON g.game_id = p.game_id
     WHERE 
         cart.user_id = ?
 ";
@@ -71,7 +81,7 @@ foreach ($cart_items as $item) {
         $item['seller_id'], 
         $item['key_id'], 
         $item['game_id'], 
-        $item['price']
+        $item['final_price'] // Use final_price (discounted or original)
     );
     $stmt->execute();
     $stmt->close();
