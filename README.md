@@ -10,18 +10,12 @@ Welcome to **CDKeys For Me**, a responsive web application for purchasing CD key
 ## Features
 
 ### User-Facing Features
-- **Homepage**:
-  - A welcome message and a carousel showcasing featured games.
+- **Catalog**:
+![Screenshot of the app](images/catalog.png)
+  - A list of all the games we currently offer on the site.
   - Fully responsive and visually appealing layout.
-- **Fixed Header**:
-  - A navigation bar that stays locked to the top of the page.
-  - Includes a search bar for products, navigation links, and user/cart actions.
-- **Product Display**:
-  - Each product is displayed with a name, image, price, and discount.
-  - A "Buy Now" button is included for each product.
-- **CSS-Only Image Carousel**:
-  - A fully functional, JavaScript-free carousel to highlight featured games.
-  - Navigation dots for easy image transitions.
+  - Shows if a game is available or sold.
+  - Allows users to buy the game right there in the menu.
 
 ### Technical Features
 - **HTML, CSS, and PHP**:
