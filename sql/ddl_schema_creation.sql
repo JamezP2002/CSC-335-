@@ -1,3 +1,6 @@
+create database cdkey_db;
+use cdkey_db; -- use the database
+
 -- Disable foreign key checks to allow dropping tables with dependencies
 SET FOREIGN_KEY_CHECKS = 0;
 
@@ -150,14 +153,10 @@ values
 (2, 1, 2, 2, 39.99, '2024-12-01 14:30:00'),
 (2, 3, 4, 4, 19.99, '2024-12-03 10:00:00');
 
-use cdkey_db;
 select * from users;
-
 select * from games;
-
 select * from promotions;
-
-insert into promotions (game_id, discount_percent, start_date, end_date) 
-values 
+select * from transactions;
+select * from cd_keys;
 (8, 10.00, '2024-01-01', '2024-12-15');
 
