@@ -123,12 +123,9 @@ project-folder/
 ---
 
 ## Future Enhancements
-- **Database Integration**:
-  - Use MySQL to store and manage product data and user orders.
-- **User Authentication**:
-  - Add login and signup functionality for user accounts.
 - **Payment Gateway**:
   - Integrate payment methods for completing purchases.
+- **Payment Gateway**:
 
 ---
 
