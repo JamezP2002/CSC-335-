@@ -111,13 +111,6 @@ values
 (2, 15.00, '2024-12-10', '2024-12-25'),
 (4, 10.00, '2024-12-20', '2024-12-31');
 
--- Insert data into users
-insert into users (username, email, password, user_type) 
-values 
-('john_doe', 'john@example.com', 'password123', 'seller'),
-('jane_doe', 'jane@example.com', 'securepassword', 'buyer'),
-('admin_user', 'admin@example.com', 'adminpassword', 'seller');
-
 -- Insert data that is available
 INSERT INTO cd_keys (cd_key, game_id, seller_id, price, status) 
 VALUES 
@@ -147,16 +140,10 @@ VALUES
 (NULL, 20, 1, 19.99, 'sold'),
 (NULL, 21, 1, 19.99, 'sold');
 
--- Insert data into transactions
-insert into transactions (buyer_id, seller_id, cdkey_id, game_id, price, transaction_date) 
-values 
-(2, 1, 2, 2, 39.99, '2024-12-01 14:30:00'),
-(2, 3, 4, 4, 19.99, '2024-12-03 10:00:00');
-
 select * from users;
 select * from games;
 select * from promotions;
 select * from transactions;
 select * from cd_keys;
-(8, 10.00, '2024-01-01', '2024-12-15');
+
 
