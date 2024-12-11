@@ -31,20 +31,26 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $game_id = $conn->real_escape_string($game_id);
     $price = $conn->real_escape_string($price);
 
-    // Insert the CD Key into the database
-    $sql = "INSERT INTO CD_Keys (cd_key, game_id, seller_id, price, status) 
-            VALUES ('$cd_key', '$game_id', '$seller_id', '$price', '$status')";
-    if ($conn->query($sql) === TRUE) {
-        $success_message = "CD Key added successfully!";
+    // Check for duplicate CD key
+    $check_sql = "SELECT * FROM CD_Keys WHERE cd_key = '$cd_key'";
+    $check_result = $conn->query($check_sql);
+    if ($check_result && $check_result->num_rows > 0) {
+        $error_message = "Error: This CD Key already exists. Please try again with a different key.";
     } else {
-        $error_message = "Error: " . $conn->error;
+        // Insert the CD Key into the database
+        $sql = "INSERT INTO CD_Keys (cd_key, game_id, seller_id, price, status) 
+                VALUES ('$cd_key', '$game_id', '$seller_id', '$price', '$status')";
+        if ($conn->query($sql) === TRUE) {
+            $success_message = "CD Key added successfully!";
+        } else {
+            $error_message = "Error: " . $conn->error;
+        }
     }
 }
 
 // Include the header
 include 'header.php';
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>

@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             if ($user['user_type'] === 'buyer') {
                 header("Location: user.php"); // Redirect to buyer's user page
             } elseif ($user['user_type'] === 'seller') {
-                header("Location: seller.php"); // Redirect to seller's page
+                header("Location: user.php"); // Redirect to seller's page
             }
             exit();
         } else {

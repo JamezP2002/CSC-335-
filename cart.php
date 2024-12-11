@@ -8,6 +8,12 @@ if (!isset($_SESSION['loggedin'])) {
     exit();
 }
 
+// Check if the user is a seller
+if ($_SESSION['user_type'] === 'seller') {
+    header("Location: user.php"); // Redirect sellers to the seller dashboard
+    exit();
+}
+
 $user_id = $_SESSION['user_id'];
 
 // Fetch items in the cart along with promotion details
